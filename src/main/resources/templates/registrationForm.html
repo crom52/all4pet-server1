@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Welcome</title>
+      <link rel="stylesheet" th:href="@{/css/register.css}"/>
+      <!-- <link rel="stylesheet" th:href="@{/css/welcome.css}"/>   -->
+  	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+
+<div class="signup-form">
+    <form method="POST" class = "formsubmit">
+		<h2>Sign Up</h2>
+		<p>Please fill in this form to create an account!</p>
+		<hr>
+        <label id="icon"><i class="fa fa-user"></i></label>
+    <input style="color:black" type="text" id="userName"/>  
+    <label id="icon"><i class="fa fa-key"></i></label>
+    <input style="color:black" type="password" id ="password" />
+		<div class="form-group">
+            <button type="button" class="btn btn-primary btn-lg" id = "button" >Sign Up</button>
+        </div>
+        <div class="text-center">Already have an account? <a href="index">Login here</a></div>
+    </form>
+	
+</div>
+</body>
+ <script>
+ $(document).ready(function() {
+	 $(document).bind('keypress', function(key) {
+         if(key.keyCode==13){
+              $('#button').trigger('click');
+          }
+     });
+	    $("#button").click(function () {
+	        var userName= $("#userName").val();
+	        var password=$("#password").val();
+	        axios.post('/register',{
+	            userName : userName,
+	            password :password
+	        }).then(function(response){
+		        });	window.location = "/personList";
+		});	
+
+		});
+</script>
+</html>                            

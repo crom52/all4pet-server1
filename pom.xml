@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+  <modelVersion>4.0.0</modelVersion>  
+  <groupId>com</groupId>  
+  <artifactId>all4pet</artifactId>  
+  <version>0.0.1-SNAPSHOT</version>  
+   <packaging>jar</packaging>  
+    <!-- <packaging>war</packaging>  -->
+  <name>all4pet</name>  
+  <url>http://maven.apache.org</url>  
+  <parent> 
+    <groupId>org.springframework.boot</groupId>  
+    <artifactId>spring-boot-starter-parent</artifactId>  
+    <version>2.1.2.RELEASE</version> 
+  </parent>  
+  <properties> 
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+  </properties>  
+  <dependencies> 
+<!--     <dependency> 
+      <groupId>org.springframework.cloud</groupId>  
+      <artifactId>spring-cloud-gcp-starter</artifactId>  
+      <version>1.0.0.RELEASE</version> 
+    </dependency>   -->
+    
+      <!--    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
+      <version>1.0.0.RELEASE</version>
+    </dependency> --> 
+    
+    
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-web</artifactId>  
+      <version>1.5.8.RELEASE</version>  
+
+    </dependency>  
+<!--     <dependency> 
+      <groupId>javax.servlet</groupId>  
+      <artifactId>javax.servlet-api</artifactId>  
+      <version>3.1.0</version>  
+      <scope>provided</scope> 
+    </dependency>   -->
+   
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-security</artifactId> 
+    </dependency>  
+ 
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-data-jpa</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>mysql</groupId>  
+      <artifactId>mysql-connector-java</artifactId>  
+      <scope>runtime</scope> 
+    </dependency>  
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->  
+    <dependency> 
+      <groupId>org.springframework</groupId>  
+      <artifactId>spring-jdbc</artifactId>  
+      <version>4.3.6.RELEASE</version>
+      <!--$NO-MVN-MAN-VER$--> 
+    </dependency>  
+     <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <exclusions>
+            <exclusion>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-mail</artifactId> 
+    </dependency>  
+    	<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>  
+    <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->  
+  
+    <dependency> 
+      <groupId>org.mybatis.spring.boot</groupId>  
+      <artifactId>mybatis-spring-boot-starter</artifactId>  
+      <version>2.1.1</version> 
+    </dependency>  
+    
+    <!-- web mvc -->  
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-web</artifactId> 
+    </dependency>  
+
+    
+    <dependency> 
+      <groupId>com.paypal.sdk</groupId>  
+      <artifactId>rest-api-sdk</artifactId>  
+      <version>1.4.2</version> 
+    </dependency>  
+
+    <!-- thymeleaf -->  
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-thymeleaf</artifactId> 
+    </dependency>  
+    <!-- test -->  
+    <dependency> 
+      <groupId>org.springframework.boot</groupId>  
+      <artifactId>spring-boot-starter-test</artifactId>  
+      <scope>test</scope> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.thymeleaf</groupId>  
+      <artifactId>thymeleaf</artifactId> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.mybatis.spring.boot</groupId>  
+      <artifactId>mybatis-spring-boot-starter</artifactId>  
+      <version>2.1.1</version> 
+    </dependency>  
+    <dependency> 
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>  
+      <artifactId>jackson-jaxrs-json-provider</artifactId>  
+    </dependency>  
+    
+  <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt</artifactId>
+    <version>0.9.1</version>
+</dependency>
+
+
+ 
+        <!-- https://mvnrepository.com/artifact/com.auth0/auth0 -->
+<!--         <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>auth0</artifactId>
+            <version>1.5.0</version>
+        </dependency> -->
+ 
+        <!-- https://mvnrepository.com/artifact/com.auth0/auth0-spring-security-api -->
+<!--         <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>auth0-spring-security-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+ -->
+  </dependencies>  
+  
+   
+  
+<build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>azure-webapp-maven-plugin</artifactId>
+                <version>0.1.5</version>
+                <configuration>
+                    <authentication>
+                        <serverId>azure-auth</serverId>
+                    </authentication>
+                    <resourceGroup>all4pet</resourceGroup>
+                    <appName>all4pet</appName>
+                    <region>westus</region>
+                    <javaVersion>1.8</javaVersion>
+                    <deploymentType>runtime</deploymentType>
+                    <stopAppDuringDeployment>true</stopAppDuringDeployment>
+                    <resources>
+                        <resource>
+                            <directory>${project.basedir}/target</directory>
+                            <targetPath>/</targetPath>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                        </resource>
+                        <resource>
+                            <directory>${project.basedir}</directory>
+                            <targetPath>/</targetPath>
+                            <includes>
+                                <include>web.config</include>
+                            </includes>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

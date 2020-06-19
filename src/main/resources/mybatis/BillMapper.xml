@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.all4pet.mapper.BillMapper">
+
+
+<insert id="saveBill" parameterType="com.all4pet.entity.BillEntity">
+INSERT INTO BILL 
+	(ADDRESS,
+	 BILLDATE,
+	 DELIVERYDATE,
+	 EMAIL, NOTE, 
+	 PAYMENTMETHOD, 
+	 PHONENUMBER, 
+	 RECEIVER, 
+	 STATUS, 
+	 BILLCODE,
+	 TOTALMONEY)
+VALUES( 
+	#{address},
+	#{billDate} , 
+	#{deliveryDate},
+	#{email},
+	#{note},
+	#{paymentMethod},
+	#{phoneNumber},
+	#{receiver},
+	#{status},
+	#{billCode},
+	#{totalMoney} )
+   </insert>
+   
+    <insert id="saveBillItems" parameterType="com.all4pet.entity.BillEntity">
+   INSERT INTO  BILLITEMS(PRODUCTID, BILLCODE ) VALUES ( #{productId}, #{billCode} );
+   </insert> 
+   
+   <!--    <select id="getBillId" resultMap="getBill"> 
+       select id from bill where roleid = #{roleid}
+    </select>
+    
+      <resultMap id = "getBill" type = "com.all4pet.entity.BillEntity" >
+       <result property = "id" column = "id"/>
+    </resultMap> -->
+   
+   
+</mapper>

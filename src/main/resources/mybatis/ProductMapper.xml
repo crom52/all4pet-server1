@@ -1,0 +1,137 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.all4pet.mapper.ProductMapper">
+
+  <resultMap id="getProduct" type="com.all4pet.entity.CategoryEntity">
+  	<id property="categoryid" column="categoryid"/>
+	<result property="categoryName" column="categoryname" />
+	<collection property="listProducts" ofType="com.all4pet.entity.ProductEntity">
+		<id property="id" column="id"/>
+		<result property="name" column="name" />
+		<result property = "amount" column="amount" />
+		<result property = "url" column="url" />
+		<result property="price" column="price" />
+		<result property="promotion" column="promotion" />
+		<result property="type" column="type" />
+		<result property = "url2" column = "url2"/>
+        <result property = "url3" column = "url3"/>
+        <result property = "brand" column = "brand"/>
+        <result property = "description" column = "description"/>
+        <result property = "numOfPurchase" column = "numofpurchase"/>
+        <result property = "color" column = "color"/>
+        <result property = "size" column = "size"/>   
+        
+	</collection>
+</resultMap>
+	<select id="getAllProduct" resultMap="getProduct">
+	select p.*,c.categoryname from product p, category c where p.categoryid = c.categoryid
+	</select>
+	
+
+	<select id="getTopProduct" resultMap="getProduct">
+	    select * from product order by numofpurchase desc limit 10;
+	</select>
+	
+	<select id="paging10Products" resultMap="getProduct">
+	select p.*, c.categoryname from product p, category c where p.categoryid = c.categoryid 
+	order by p.id
+	limit ${offset},10
+	</select>
+	
+	<select id="get10ProductByCategoryAndType" resultMap="getProduct">
+	select p.* ,c.categoryname from product p, category c where p.categoryid = c.categoryid
+	and p.type = #{type}
+	and c.categoryname = #{category}
+	order by p.id
+	limit ${offset},10
+	</select>
+	
+	 <resultMap id = "getProductWithoutCategory" type = "com.all4pet.entity.ProductEntity" >
+       <result property = "id" column = "id"/>
+       <result property = "name" column = "name"/>
+       <result property = "amount" column = "amount"/>
+       <result property = "url" column = "url"/>
+       <result property = "price" column = "price"/>
+       <result property = "promotion" column = "promotion"/>
+       <result property = "type" column="type" />
+       <result property = "url2" column = "url2"/>
+       <result property = "url3" column = "url3"/>
+       <result property = "brand" column = "brand"/>
+       <result property = "description" column = "description"/>
+       <result property = "numOfPurchase" column = "numofpurchase"/>
+       <result property = "color" column = "color"/>
+       <result property = "size" column = "size"/>       
+    </resultMap>
+    
+	<select id = "getProductById" resultMap = "getProductWithoutCategory">
+	select * from product where id = #{id} limit 1;
+	</select>
+	<select id="getProductByName" resultMap="getProductWithoutCategory">
+	SELECT * FROM PRODUCT WHERE NAME = #{name} limit 1;
+   	</select>
+	
+
+  <resultMap id="getCategory" type="com.all4pet.entity.CategoryEntity">
+		<result property="categoryName" column="categoryname" />
+		<result property="categoryid" column="categoryid" />
+  </resultMap>
+  
+   <select id="getCategoryByName" resultMap="getCategory">
+		SELECT * FROM CATEGORY WHERE CATEGORYNAME = #{categoryName}
+   </select>
+  
+   <select id="getAllCategoryName" resultMap="getProduct">
+		select categoryname from category
+   </select>
+   
+
+   <select id="getProductByCategoryName" resultMap="getProduct">
+		select p.*, c.categoryname from product p,category c 
+		where p.categoryid = c.categoryid
+			and c.categoryname = #{categoryName}
+   </select>
+   
+    <delete id="deleteProductById" parameterType="long">
+        DELETE FROM PRODUCT WHERE ID = #{id};
+    </delete>
+    
+     <update id="updateProductById" >
+        UPDATE PRODUCT 
+        SET NAME = #{product.name}
+        , AMOUNT = #{product.amount} 
+        , URL = #{product.url} 
+        , URL2 = #{product.url2}
+        , URL3 = #{product.url3}
+        , PRICE = #{product.price}
+        , PROMOTION = #{product.promotion}
+        , TYPE = #{product.type}
+        , BRAND = #{product.brand}
+        , NUMOFPURCHASE = #{product.numOfPurchase}
+        , DESCRIPTION = #{product.description}
+        , CATEGORYID = #{product.category.categoryid}
+        , SIZE = #{product.size}
+        , COLOR = #{product.color}
+        WHERE ID = #{id};
+      </update>
+      
+      
+      <update id="updateNumOfPurchase" >
+        UPDATE PRODUCT 
+        SET NUMOFPURCHASE = #{numOfPurchase} + NUMOFPURCHASE
+        WHERE ID = #{id};
+      </update>
+      
+      
+
+   		
+   		 <insert id="insertProduct" parameterType="com.all4pet.entity.ProductEntity"  >
+        INSERT INTO PRODUCT (NAME, AMOUNT, URL, URL2, URL3, PRICE, PROMOTION, TYPE, BRAND, NUMOFPURCHASE, DESCRIPTION, CATEGORYID, COLOR, SIZE)
+        VALUES (#{name}, #{amount}, #{url} , #{url2}, #{url3}, #{price}, #{promotion}, #{type}, #{brand}, #{numOfPurchase},#{description}, #{category.categoryid}, #{color}, #{size});
+    </insert>
+   
+
+    
+    
+    
+</mapper>
