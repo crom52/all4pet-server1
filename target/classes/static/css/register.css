@@ -1,0 +1,108 @@
+@import 'https://fonts.googleapis.com/css?family=Galada';
+body{
+  background-color:#292931;
+  background:url(https://i.stack.imgur.com/vhoa0.jpg)  no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+form{
+  margin: 10px 35px;
+}
+
+a:hover{
+  color: rgba(255, 152, 0, 0.79);
+  text-decoration: underline;
+  
+}
+input[type=text], input[type=password] {
+  width: 200px;
+  height: 38px;
+  border:1px solid #cbc9c9;
+  padding-left:5px;
+  margin-left:-5px;
+  margin-top:3px;
+  border-radius:0px 3px 3px 0px;
+  -webkit-border-radius:0px 3px 3px 0px;
+  -moz-border-radius:0px 3px 3px 0px;
+}
+
+#icon{
+  background-color:#F4F4F4;
+  color:#625864;
+  display:inline-block;
+  font-size:14px;
+  padding-top:8px;
+  padding-bottom:8px;
+  width:38px;
+  margin-left: 15px;
+  margin-bottom:20px;
+  text-align:center;
+  border-top:solid 1px #cbc9c9;
+  border-bottom:solid 1px #cbc9c9;
+  border-left:solid 1px #cbc9c9;
+  border-radius:3px 0 0 3px;
+  -webkit-border-radius:3px 0 0 3px;
+  -moz-border-radius:3px 0 0 3px; 
+}
+
+   
+	.signup-form {
+		width: 390px;
+		margin: 10px;
+		padding: 20px 0;
+	}
+	.signup-form form {
+		color: #999;
+		border-radius: 20px;
+    	margin-bottom: 15px;
+        background: #fff;
+        padding: 30px;
+        
+    }
+
+    .signup-form hr {
+        margin: 0 -30px 20px;
+    }
+	.signup-form .form-group {
+		margin-bottom: 20px;
+	}
+
+	.signup-form input[type="checkbox"] {
+		margin-top: 2px;
+	}    
+    .signup-form .btn {        
+        font-size: 16px;
+        font-weight: bold;
+		background: #3598dc;
+		border: none;
+		min-width: 140px;
+    }
+	.signup-form .btn:hover, .signup-form .btn:active {
+		background: #2389cd;
+		outline: none !important;
+	}
+	.signup-form a {
+		color: #fff;
+        text-decoration: underline;
+	}
+    .signup-form a:hover {
+        text-decoration: none;
+    }
+    .signup-form form a {
+		color: #3598dc;
+        text-decoration: none;
+	}
+    .signup-form form a:hover {
+		text-decoration: underline;
+	}
+	.signup-form form h2{
+  font-family: 'Galada', cursive;
+  color:black;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+

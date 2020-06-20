@@ -1,0 +1,130 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.all4pet.mapper.UserMapper">
+  <insert id="insertUser" parameterType="com.all4pet.entity.UserEntity"  >
+        INSERT INTO USER (USERNAME, PASSWORD, EMAIL, ACTIVE, ROLEID)
+        VALUES (#{userName}, #{password}, #{email} , #{active}, #{role.roleid});
+    </insert>
+    
+      <insert id="insertUserProfile" parameterType="com.all4pet.entity.UserProfileEntity"  >
+        INSERT INTO PROFILEUSER (USERID, CREATEDDATE)
+        VALUES ((select id from user where username = #{userEntity.userName} ), #{createdDate});
+      </insert>
+    
+      <update id="updateUserProfileByUserId" >
+        UPDATE PROFILEUSER 
+        SET NAME = #{name} , ADDRESS = #{address} , PHONENUMBER = #{phoneNumber} , BIRTHDAY = #{birthdayTypeDate}
+        WHERE USERID = #{userId};
+      </update>
+      <update id="changePasswordByUserId" >
+        UPDATE USER 
+        SET PASSWORD = #{newPassword}
+        WHERE ID = #{userId};
+      </update>
+ 
+    <update id="updateUser" parameterType="String">
+        UPDATE USER SET PASSWORD = #{password} WHERE USERNAME = #{userName};
+    </update>
+     
+    <delete id="deleteUser" parameterType="long">
+        DELETE from USER WHERE ID = #{id};
+    </delete>
+    
+    <delete id="deleteUserProfile" parameterType="long">
+        DELETE FROM PROFILEUSER WHERE USERID = #{id};
+    </delete>
+    
+     <delete id="deleteUserCart" parameterType="long">
+        DELETE FROM CART WHERE USERID = #{id};	
+    </delete>
+    
+     <delete id="deleteUserCartItem" parameterType="long">
+        DELETE FROM CARTITEM WHERE CARTID = (SELECT ID FROM CART WHERE ID = #{id});	
+    </delete>
+    
+    
+	  <resultMap id = "login" type = "com.all4pet.entity.UserEntity" >
+    </resultMap>
+     <select id="getUserByUserNameOrEmail" resultMap="login" parameterType="map" >
+        SELECT id FROM USER where username = #{userName} or email = #{email} limit 1;
+    </select>
+
+
+	   <select id="getRole" resultMap="getRole"> 
+       <!--  SELECT roleid FROM roleusers where roleusers.roleid = #{role}; -->
+       select roleid from roleusers where roleid = #{roleid}
+    </select>
+   
+       <resultMap id = "getRole" type = "com.all4pet.entity.RoleUserEntity" >
+       <result property = "roleid" column = "roleid"/>
+       <result property = "rolename" column = "rolename"/>
+    </resultMap>
+         
+  <resultMap id="getUser" type="com.all4pet.entity.RoleUserEntity">
+	<id property="roleid" column="roleid"/>
+	<result property="rolename" column="rolename" />
+	<collection property="listUsers" ofType="com.all4pet.entity.UserEntity">
+		<id property="id" column="id"/>
+		<result property="userName" column="username" />
+		<result property="password" column="password" />
+		<result property="active" column="active" />
+		<result property="email" column="email" />
+	</collection>
+</resultMap>
+<select id="selectAllUser" resultMap="getUser">
+<!-- 	select u.*,r.rolename from user u, roleusers r where u.roleid=r.roleid -->
+select u.*, ru.rolename from user u , roleusers ru where u.roleid = ru.roleid 
+</select>
+
+
+ <resultMap id="getUserByUserName" type="com.all4pet.entity.UserEntity">
+ 		<id property="id" column="id"/>
+		<result property="userName" column="username" />
+		<result property="password" column="password" />
+		<result property="active" column="active" />
+		<result property="email" column="email" />
+	<collection property="role" ofType="com.all4pet.entity.RoleUserEntity">
+		<id property="roleid" column="roleid"/>
+	<result property="rolename" column="rolename" />
+	</collection>
+</resultMap>
+<select id="getUserByUserName" resultMap="getUserByUserName" >
+select u.*, ru.rolename from user u , roleusers ru 
+where u.roleid = ru.roleid 
+and u.username = #{userName}
+    </select>
+    
+    
+<resultMap id="getUserProfile" type="com.all4pet.entity.UserProfileEntity">
+	<result property="createdDate" column="createddate" jdbcType="DATE" javaType="java.util.Date" typeHandler="org.apache.ibatis.type.DateTypeHandler"/>
+	<result property="address" column="address" />
+	<result property="birthday" column="birthday" jdbcType="DATE" javaType="java.util.Date" typeHandler="org.apache.ibatis.type.DateTypeHandler" />
+	<result property="name" column="name" />
+	<result property="phoneNumber" column="phonenumber" />	
+	<association property="userEntity" javaType="com.all4pet.entity.UserEntity">
+<!--  		<id property="id" column="userid" />
+		<result property="email" column="email" />
+		<result property="active" column="active" />	 --> 
+	</association>
+</resultMap>
+<select id="getUserProfile" resultMap="getUserProfile" >
+select pu.* from profileuser pu 
+where pu.userid = #{userId}
+    </select>
+    
+    
+     <update id="updateUserByUserName" >
+        UPDATE USER 
+        SET PASSWORD = #{password} , EMAIL = #{email} , ACTIVE = #{active}, ROLEID = #{role.roleid}
+        WHERE USERNAME = #{userName};
+      </update>
+    
+    <select id="paging10User" resultMap="getUser">
+	<!-- 	select u.*,r.rolename from user u, roleusers r where u.roleid=r.roleid -->
+	select * from user  
+	order by id
+	limit ${offset},10
+	</select>
+   
+</mapper>

@@ -29,6 +29,7 @@ public class BillEntity {
 	private String note;
 	private Date billDate;
 	private List<CartItemEntity> listItems;
+	private List<ProductEntity> listProducts;
 	private String billCode;
 //	private PayerEntity payerEntity;
 
@@ -144,6 +145,14 @@ public class BillEntity {
 
 	public void setBillCode(String billCode) {
 		this.billCode = billCode;
+	}
+
+	public List<ProductEntity> getListProducts() {
+		return listProducts;
+	}
+
+	public void setListProducts(List<ProductEntity> listProducts) {
+		this.listProducts = listProducts;
 	}
 
 

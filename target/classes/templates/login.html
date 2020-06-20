@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+   <html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+   <head>
+
+      
+      <title>Welcome</title>
+	 <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+  	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
+  	  <script src="js/jquery-1.11.0.min.js"></script>
+	  <script src="js/bootstrap.min.js"></script>
+	  <script src="js/wow.min.js"></script>	  
+  	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>  	  
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>     
+   </head>
+   <body>
+
+    <div class="wrapper animated bounce">
+  <h1>Welcome</h1>
+  <hr>
+   <button onclick="myFunction()"></button>ADD TO CARD</a>
+                        
+  <button onclick="myFunction2()"></button>SHOW CART</a>
+  
+  <script>
+function myFunction() {
+	axios.post('/cart/add?product=17',)
+	.then(function (response) {
+	  console.log(response);
+	})
+}
+</script>
+
+	<script>
+function myFunction2() {
+axios.get('/cart/showCart',)
+	.then(function (response) {
+	  console.log(response); 
+	})
+}
+</script>
+	 <p th:if="${param.error}" class="error">Invalid email or password</p>
+    <form class = "formsubmit" method="POST" th:object="${loginUser}">
+     <div th:if="${blankErrorMessage}" th:utext="${blankErrorMessage}"
+    style="color:#fffa00;font-style:italic;">
+    </div>
+    <label id="icon"><i class="fa fa-user"></i></label>
+    <input type="text" id= "userName"  th:field="*{userName}" />  
+    <label id="icon"><i class="fa fa-key"></i></label>
+    <input type="password" id="password" th:field="*{password}" />
+
+    <input type = "submit" value = "Log in">  
+    <hr>
+    <div class="crtacc"><a href="registrationForm">Create Account</a></div>
+  </form>
+ 
+</div>       
+  
+   </body>
+ <script>
+ $(document).ready(function() {
+	 $(document).bind('keypress', function(key) {
+         if(key.keyCode==13){
+              $('#buttonSubmit').trigger('click');
+          }
+     });
+	 $("#buttonSubmit").click(function(){        
+	        $(".formsubmit").submit(function(){
+	        	alert("Submitted");
+	        }
+);
+	    });
+	     $("#formsubmit").submit(function () {
+	    	var userName= $("#userName").val();
+	        var password=$("#password").val();
+	     	axios.post('/loginFormModel',{
+	            userName : userName,
+	            password :password
+	        }).then(function(response){
+	        	if (response.data === true) 
+	        	window.location = "/personList";
+	        	else window.location = "/index"
+	        })
+	    }) 
+ 
+ });
+</script>
+
+
+</html>

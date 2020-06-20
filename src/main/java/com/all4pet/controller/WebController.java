@@ -1,6 +1,7 @@
 package com.all4pet.controller;
 
 import java.security.Security;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.all4pet.config.JWTAuthenticationFilter;
 import com.all4pet.config.JWTTokenProvider;
 import com.all4pet.entity.*;
+import com.all4pet.mapper.BillMapper;
 //import com.jwatgroupb.repository.ProductRepository;
 //import com.jwatgroupb.repository.RoleUserRepository;
 //import com.jwatgroupb.repository.UserRepository;
@@ -50,6 +52,7 @@ public class WebController {
 	@Autowired SecurityController securityController;
 	@Autowired AuthenticationManager authenticationManager;
 	@Autowired JWTAuthenticationFilter jwtAuthenticationFilter;
+	@Autowired BillMapper billMapper;
 
 
 
@@ -59,16 +62,26 @@ public class WebController {
       private UserDetailsServiceImp userDetailsServiceImp;
 
       @PostMapping("/login")
-      public String authenticateUser(@Valid @RequestBody JsonNode json) {
-    	  String jwt = "";
+      public List<String> authenticateUser(@Valid @RequestBody JsonNode json) {
+    	  List<String> jwt = new ArrayList<String>();
+    	  jwt.add(null);
+    	  jwt.add("Wrong user name or password");
+    	  
     	  try {
     		  String userName = json.get("userName").asText();
+    		  String password = json.get("password").asText();
     	      UserDetails userDetails = userDetailsServiceImp.loadUserByUsername(userName);
-    	      if (userDetails != null)  {
-    			jwt = tokenProvider.generateToken(userName);    
+    	      
+    	      String role = userDetails.getAuthorities().toString();
+    	      role = role.substring(6,role.toString().length() - 1 );
+    	      if (userDetails != null && password.contentEquals(userDetails.getPassword()))  {
+    	    	  jwt.clear();
+    	    	  jwt.add(role);
+    	    	  jwt.add(tokenProvider.generateToken(userName));
+    	    	  return jwt;
     		}	
 		} catch (Exception e) {
-			return "Wrong Username or Password";
+			return jwt;
 		}
     	  return jwt;
       }
@@ -78,6 +91,17 @@ public class WebController {
 		List<CategoryEntity> categoryList = productMapper.getAllCategoryName();
 		return categoryList;
 	}
+	
+    
+	@GetMapping( "/search" )
+    public @ResponseBody List<ProductEntity> searchProduct(@RequestParam("key") String key) {
+		key = key.replaceAll("-", " ");
+		key = "'%"+key+"%'";
+		System.out.println(key);
+		List<ProductEntity> listProduct = productMapper.getProductBySearchKey(key);
+		return listProduct;
+	}
+	
 	
 	@GetMapping( "/product" )
     public @ResponseBody List<ProductEntity> getProductByCategory(@RequestParam("category") String categoryName) {
@@ -112,5 +136,18 @@ public class WebController {
 	 public @ResponseBody ProductEntity productDetail(@RequestParam("id") long productId) {
 		ProductEntity product = productMapper.getProductById(productId);		
 		return product; 		
+		}
+	
+	@PostMapping("/showListOrder")
+	 public @ResponseBody List<BillEntity> showOrder () {
+		List<BillEntity> bill = new ArrayList<BillEntity>();
+		boolean checkLogin = SecurityController.isAuthenticanted();
+		if (checkLogin == true) {// Da dang nhap
+			String userName = SecurityController.getPrincipal().getName();
+			bill = billMapper.getListBillByUserName(userName);
+		} 
+		
+		return  bill; 		
+		//	TODO code billmapper.xml
 		}
 }
