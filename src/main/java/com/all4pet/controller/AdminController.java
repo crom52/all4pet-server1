@@ -50,29 +50,41 @@ public class AdminController {
 
 	@Transactional
 	@PostMapping("admin/saveEditUser")
-	public @ResponseBody void editUser(@RequestBody JsonNode json) {
-		String userName = json.get("userName").asText();
-		String password = json.get("password").asText();
-		String email = json.get("email").asText();
-		int active = json.get("active").asInt();
-		String roleName = json.get("roleName").asText().toLowerCase();
-		RoleUserEntity role = new RoleUserEntity();
-		if (roleName.equals("admin")) {
-			role = userMapper.getRole(1);
-			password = SecurityController.passwordEncoder(password);
-		} else {
-			role = userMapper.getRole(2);
+	public @ResponseBody String editUser(@RequestBody JsonNode json) {
+		try {
+			String userName = json.get("userName").asText();
+			String password = json.get("password").asText();
+			String email = json.get("email").asText();
+			int active = json.get("active").asInt();
+			String roleName = json.get("roleName").asText().toLowerCase();
+			RoleUserEntity role = new RoleUserEntity();
+			if (roleName.equals("admin")) {
+				role = userMapper.getRole(1);
+				password = SecurityController.passwordEncoder(password);
+			} else {
+				role = userMapper.getRole(2);
+			}
+			UserEntity user = new UserEntity(userName, password, email, active, role);
+			userMapper.updateUserByUserName(user);
+			return "success";
+		} catch (Exception e) {
+			return "failed";
 		}
-		UserEntity user = new UserEntity(userName, password, email, active, role);
-		userMapper.updateUserByUserName(user);
+		
 	}
 
 	@Transactional
 	@PostMapping("admin/deleteUser")
-	public @ResponseBody void deleteUser(@RequestParam("id") long id) {
-		userMapper.deleteUserCart(id);
-		userMapper.deleteUserProfile(id);
-		userMapper.deleteUser(id);
+	public @ResponseBody String deleteUser(@RequestParam("id") long id) {
+		try {
+			userMapper.deleteUserCart(id);
+			userMapper.deleteUserProfile(id);
+			userMapper.deleteUser(id);
+			return "success";
+		} catch (Exception e) {
+			return "failed";
+		}
+		
 	}
 
 	@Transactional
@@ -93,36 +105,42 @@ public class AdminController {
 		// roleid = 2 is customer
 		UserEntity user = new UserEntity(userName, password, email, active, role);
 		if (userMapper.getUserByUserNameOrEmail(userName, email) != null) {
-			return "username hoac email nay da ton tai";
+			return "username or email is existed";
 		} else {
 			userMapper.insertUser(user);
 			Date createdDate = Calendar.getInstance().getTime();
 			UserProfileEntity userProfile = new UserProfileEntity(createdDate, user);
 			userMapper.insertUserProfile(userProfile);
 			cartMapper.saveCart(userName);
-			return "add user thanh cong";
+			return "success";
 		}
 	}
 
 	@Transactional
 	@PostMapping("/register")
 	public @ResponseBody String register(@RequestBody JsonNode json) {
-		String userName = json.get("userName").asText();
-		String password = json.get("password").asText();
-		String email = json.get("email").asText();
-		int active = 1;
-		RoleUserEntity role = userMapper.getRole(2); // roleid = 2 is customer
-		UserEntity user = new UserEntity(userName, password, email, active, role);
-		if (userMapper.getUserByUserNameOrEmail(userName, email) != null) {
-			return "username hoac email nay da ton tai";
-		} else {
-			userMapper.insertUser(user);
-			Date createdDate = Calendar.getInstance().getTime();
-			UserProfileEntity userProfile = new UserProfileEntity(createdDate, user);
-			userMapper.insertUserProfile(userProfile);
-			cartMapper.saveCart(userName);
-			return "dang ky thanh cong";
+		try {
+			String userName = json.get("userName").asText();
+			String password = json.get("password").asText();
+			String email = json.get("email").asText();
+			int active = 1;
+			RoleUserEntity role = userMapper.getRole(2); // roleid = 2 is customer
+			UserEntity user = new UserEntity(userName, password, email, active, role);
+			if (userMapper.getUserByUserNameOrEmail(userName, email) != null) {
+				return "User name is existed";
+			} else {
+				userMapper.insertUser(user);
+				Date createdDate = Calendar.getInstance().getTime();
+				UserProfileEntity userProfile = new UserProfileEntity(createdDate, user);
+				userMapper.insertUserProfile(userProfile);
+				cartMapper.saveCart(userName);
+				return "success";
+			}
+			
+		} catch (Exception e) {
+			return "failed";
 		}
+		
 	}
 
 //-------ProductEntity--------

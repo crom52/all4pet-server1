@@ -138,16 +138,19 @@ public class WebController {
 		return product; 		
 		}
 	
-	@PostMapping("/showListOrder")
-	 public @ResponseBody List<BillEntity> showOrder () {
-		List<BillEntity> bill = new ArrayList<BillEntity>();
-		boolean checkLogin = SecurityController.isAuthenticanted();
-		if (checkLogin == true) {// Da dang nhap
-			String userName = SecurityController.getPrincipal().getName();
-			bill = billMapper.getListBillByUserName(userName);
-		} 
-		
-		return  bill; 		
-		//	TODO code billmapper.xml
+	@PostMapping("/user/showListOrder")
+	public @ResponseBody List<BillEntity> showOrder() {
+		try {
+			List<BillEntity> bill = new ArrayList<BillEntity>();
+			boolean checkLogin = SecurityController.isAuthenticanted();
+			if (checkLogin == true) {// Da dang nhap
+				String userName = SecurityController.getPrincipal().getName();
+				bill = billMapper.getListBillByUserName(userName);
+			}
+			return bill;
+		} catch (Exception e) {
+			return null;
 		}
+
+	}
 }
