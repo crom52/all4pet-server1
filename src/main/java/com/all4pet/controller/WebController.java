@@ -138,7 +138,7 @@ public class WebController {
 		return product; 		
 		}
 	
-	@PostMapping("/user/showListOrder")
+	@GetMapping("/user/showListOrder")
 	public @ResponseBody List<BillEntity> showOrder() {
 		try {
 			List<BillEntity> bill = new ArrayList<BillEntity>();
@@ -151,6 +151,12 @@ public class WebController {
 		} catch (Exception e) {
 			return null;
 		}
-
+	}
+	
+	@GetMapping("/relateProduct")
+	public @ResponseBody List<ProductEntity> relateProduct(@RequestParam ("type") String type) {
+		List<ProductEntity> relateProduct = productMapper.getRelateProduct(type);
+		return relateProduct;
+		
 	}
 }

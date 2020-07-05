@@ -25,6 +25,7 @@ public interface ProductMapper {
 	public List<ProductEntity> getTopProduct();
 	public void updateNumOfPurchase(long id, int numOfPurchase);
 	public List<ProductEntity> getProductBySearchKey(String key);
+	public List<ProductEntity> getRelateProduct(String type);
 
 	
 

@@ -72,6 +72,9 @@
 	<select id = "getProductById" resultMap = "getProductWithoutCategory">
 	select * from product where id = #{id} limit 1;
 	</select>
+	<select id = "getRelateProduct" resultMap = "getProductWithoutCategory">
+	select * from product where type = #{type};
+	</select>
 	<select id="getProductByName" resultMap="getProductWithoutCategory">
 	SELECT * FROM PRODUCT WHERE NAME = #{name} limit 1;
    	</select>
