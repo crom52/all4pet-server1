@@ -32,7 +32,7 @@ public class EmailService {
 
     public void sendMail(String billCode, String customerEmail, String reciever) {
         Properties props = new Properties();
-        customerEmail = "phuc52crom@gmail.com"; //to test
+        customerEmail = "nguyenhieu9726@gmail.com"; //to test
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");

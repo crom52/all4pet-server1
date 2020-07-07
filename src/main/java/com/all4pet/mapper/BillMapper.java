@@ -15,5 +15,7 @@ public interface BillMapper {
 	void saveBillItems(String billCode, long productId) ;
 	long getBillId();
 	List<BillEntity> getListBillByUserName(String userName);
+	List<BillEntity> getOrderList();
+	void deleteOrderById(long id);
 
 }

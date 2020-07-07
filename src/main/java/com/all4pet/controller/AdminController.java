@@ -18,6 +18,7 @@ import com.all4pet.entity.*;
 
 //PHUC
 import com.fasterxml.jackson.databind.JsonNode;
+import com.all4pet.mapper.BillMapper;
 import com.all4pet.mapper.CartMapper;
 import com.all4pet.mapper.ProductMapper;
 import com.all4pet.mapper.UserMapper;
@@ -30,6 +31,8 @@ public class AdminController {
 	ProductMapper productMapper;
 	@Autowired
 	CartMapper cartMapper;
+	@Autowired
+	BillMapper billMapper;
 	@Autowired
 	UserDetailsServiceImp userDetailsServiceImp;
 
@@ -215,5 +218,6 @@ public class AdminController {
 			return "add product thanh cong";
 		}
 	}
+
 
 }
