@@ -17,5 +17,10 @@ public interface BillMapper {
 	List<BillEntity> getListBillByUserName(String userName);
 	List<BillEntity> getOrderList();
 	void deleteOrderById(long id);
+	void updateOrder(long id, String receiver, String address, String phonenumber, int status, String paymentMethod,
+			float totalMoney);
+	BillEntity getBillById(long id);
+
+//	void updateBillItemByBillCode(String billCode, long productId);
 
 }

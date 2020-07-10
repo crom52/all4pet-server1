@@ -41,11 +41,7 @@ public class ViewController {
 		return "listOrder";
 	}
 	
-	@RequestMapping("admin/deleteOrder/{id}")
-	public String deleteOrderById(@PathVariable(value = "id") long id) {
-		billMapper.deleteOrderById(id);
-		return "redirect:/admin/orderList";
-	}
+
 
 
 //

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -19,10 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.all4pet.config.VNCharacterUtils;
 import com.all4pet.entity.BillEntity;
 import com.all4pet.entity.CartEntity;
 import com.all4pet.entity.CartItemEntity;
+import com.all4pet.entity.ProductEntity;
 import com.all4pet.entity.UserEntity;
 import com.all4pet.entity.UserProfileEntity;
 import com.all4pet.mapper.BillMapper;
@@ -84,27 +86,6 @@ public class CheckoutController {
 			bill.setBillDate((Date) Calendar.getInstance().getTime());
 			bill.setReceiver(userName);
 		}
-
-//		else { 
-//			//chua dang nhap
-//			CartEntity sessionCart = (CartEntity) session.getAttribute("cart");
-//			if (sessionCart == null) {
-//				return new BillEntity();
-//			} else {
-//				List<CartItemEntity> listItems = sessionCart.getListCartItem(); 
-//				float totalMoney = 0;
-//				for (CartItemEntity item : listItems) {			
-//					float price = item.getProductEntity().getPrice();
-//					int promotion = item.getProductEntity().getPromotion();
-//					long quantity = item.getQuantity();	
-//					totalMoney +=  (quantity*price) - (quantity*price*promotion/100);
-//				}			
-//				bill.setTotalMoney(totalMoney);
-//				bill.setListItems(listItems);
-//				bill.setBillDate((Date)Calendar.getInstance().getTime());	
-//			}
-//			session.setAttribute("bill", bill);
-//		}
 		return bill;
 
 	}
@@ -146,10 +127,6 @@ public class CheckoutController {
 		bill.setPhonenumber(json.get("phoneNumber").asText());
 		bill.setPaymentMethod(json.get("paymentMethod").asText());
 
-//		if (paymentMethod.equals("PAYPAL")) {
-//			paypalController.payWithPaypal(request, bill.getTotalMoney());
-//		}
-
 		billMapper.saveBill(bill);
 		saveBillItems(bill);
 		emailService.sendMail(billCode, email, receiver);
@@ -175,6 +152,49 @@ public class CheckoutController {
 			String billCode = bill.toString().substring(bill.toString().indexOf("@") + 1);
 			billMapper.saveBillItems(billCode, item.getProductEntity().getId());
 		}
+	}
+
+	@Transactional
+	@PostMapping("/admin/updateOrder/{id}")
+	@ResponseBody
+	public void updateOrder(@PathVariable("id") long id, @RequestBody JsonNode json) {
+		String billCode = json.get(1).asText();
+		String receiver = json.get(2).asText();
+		String address = json.get(3).asText();
+		String phonenumber = json.get(4).asText();
+		String productName = json.get(5).asText();
+		int status = json.get(6).asInt();
+		String paymentMethod = json.get(7).asText();
+		float totalMoney = json.get(8).asLong();
+		BillEntity bill = billMapper.getBillById(id);
+		if (bill == null) {
+			// chua co bill nay. dung cho btnAdd Order
+			bill = new BillEntity();
+			bill.setBillCode(billCode);
+			bill.setReceiver(receiver);
+			bill.setAddress(address);
+			bill.setPaymentMethod(paymentMethod);
+			bill.setStatus(status);
+			bill.setPhonenumber(phonenumber);
+			bill.setTotalMoney(totalMoney);
+			
+			productName = VNCharacterUtils.removeAccent(productName);
+			productName = "%"+productName+"%";
+			ProductEntity product = productMapper.getProductByName(productName);
+			if (product != null) {
+				billMapper.saveBill(bill);
+				billMapper.saveBillItems(billCode, product.getId());
+			}
+		} else {
+			// da co bill nay. dung cho btnUpdate Order
+			billMapper.updateOrder(id, receiver, address, phonenumber, status, paymentMethod, totalMoney);
+		}
+
+	}
+	
+	@GetMapping("admin/deleteOrder/{id}")
+	public void deleteOrderById(@PathVariable(value = "id") long id) {
+		billMapper.deleteOrderById(id);
 	}
 
 }

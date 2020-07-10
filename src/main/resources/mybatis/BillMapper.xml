@@ -42,11 +42,15 @@ VALUES(
     </select>
     
      <select id="getOrderList" resultMap="getListBillByUserName"> 
-    	select b.*, bi.productid, p.* 
+    	select b.*, bi.productid, p.name, p.id productId
 		from bill b, billitems bi, product p 
 		where 1=1 
 		and b.billcode = bi.billcode collate utf8_general_ci
 		and bi.productid = p.id
+    </select>
+    
+     <select id="getBillById" resultMap="getListBillByUserName"> 
+    	select id from bill where id = #{id} limit 1
     </select>
     
       <resultMap id = "getListBillByUserName" type = "com.all4pet.entity.BillEntity">
@@ -80,5 +84,20 @@ VALUES(
      <delete id="deleteOrderById" parameterType="long">
         DELETE FROM BILL WHERE ID = #{id};
     </delete>
+    
+     <update id="updateOrder">
+        UPDATE BILL
+        SET
+	     ADDRESS = #{address},
+		 PAYMENTMETHOD = #{paymentMethod}, 
+		 PHONENUMBER = #{phonenumber}, 
+		 RECEIVER = #{receiver}, 
+		 STATUS = #{status}, 
+		 TOTALMONEY = #{totalMoney}
+	 	WHERE
+	 	ID = #{id}
+    </update>
+    
+ 
    
 </mapper>

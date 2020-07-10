@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.all4pet.config.VNCharacterUtils;
 import com.all4pet.entity.*;
 
 //PHUC
@@ -211,6 +211,8 @@ public class AdminController {
 		CategoryEntity category = productMapper.getCategoryByName(categoryName);
 		ProductEntity product = new ProductEntity(name, amount, url, price, promotion, type, url2, url3, brand,
 				description, 0, category, size, color);
+		name = VNCharacterUtils.removeAccent(name);
+		name = "%"+name+"%";
 		if (productMapper.getProductByName(name) != null) {
 			return "san pham nay da ton tai";
 		} else {
