@@ -38,20 +38,23 @@ public class UserProfileController {
 	@Transactional
 	@PostMapping ("/user/editProfile")
 	public @ResponseBody String editUserProfile (@RequestBody JsonNode json) {
-		boolean checkLogin = SecurityController.isAuthenticanted();	
-		if (checkLogin == true ) {
-			String userName = SecurityController.getPrincipal().getName();
-			long userId = userMapper.getUserByUserName(userName).getId();
-			String name = json.get("name").asText();
-			String address = json.get("address").asText();
-			String phoneNumber = json.get("phoneNumber").asText();	
-			long birthdayTypeMiliSecond = json.get("birthday").asLong();
-			Date birthdayTypeDate = new Date(birthdayTypeMiliSecond);
-			birthdayTypeDate.toLocalDate();
-			userMapper.updateUserProfileByUserId(userId, name, address, phoneNumber, birthdayTypeDate);
-			return "edit successfully";
-		}		
-		return "not edit";	
+//		boolean checkLogin = SecurityController.isAuthenticanted();	
+			long userId = json.get("userId").asLong();
+			UserEntity user = userMapper.getUserById(userId);
+			if (user != null) {
+				String name = json.get("name").asText();
+				String address = json.get("address").asText();
+				String phoneNumber = json.get("phoneNumber").asText();	
+				long birthdayTypeMiliSecond = json.get("birthday").asLong();
+				Date birthdayTypeDate = new Date(birthdayTypeMiliSecond);
+				birthdayTypeDate.toLocalDate();
+				userMapper.updateUserProfileByUserId(userId, name, address, phoneNumber, birthdayTypeDate);
+				return "edit successfully";
+			} else {
+				return "user ko ton tai";
+			}
+			
+			
 	}
 	
 	@Transactional

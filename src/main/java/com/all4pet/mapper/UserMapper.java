@@ -27,4 +27,5 @@ public interface UserMapper {
 	public List<UserEntity> paging10User(int offset);
 	public void deleteUserProfile(long id);
 	public void deleteUserCart(long id);
+	public UserEntity getUserById(long userId);
 }
