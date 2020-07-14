@@ -25,6 +25,7 @@ import com.all4pet.mapper.BillMapper;
 import com.all4pet.mapper.ProductMapper;
 import com.all4pet.mapper.UserMapper;
 import com.all4pet.entity.BillEntity;
+import com.all4pet.entity.ProductEntity;
 import com.all4pet.entity.UserEntity;
 
 
@@ -41,32 +42,15 @@ public class ViewController {
 		return "listOrder";
 	}
 	
+	@RequestMapping("admin/productList")
+	public String getProductList(Model model) {
+		List<ProductEntity> productList = productMapper.getAllProduct2();
+		model.addAttribute("productList", productList);
+		return "listProduct";
+	}
+	
 
 
-
-//
-//	@RequestMapping(value =  "admin/userList" )
-//	    public String personListView() {
-//	        return "userList";
-//		}
-//	
-//	@RequestMapping(value =  "shop-details" )
-//    public String shopDetails() {
-//        return "shop-details";
-//	}
-//	@RequestMapping(value =  "/home" )
-//	    public String homePage() {
-//	        return "home";
-//	    }
-//	@RequestMapping(value = "/admin") 
-//	    public String adminPage() {
-//	        return "admin";
-//	    }
-//
-//	@RequestMapping(value = { "/register" })
-//			public String registerView() {
-//	       return "registrationForm";
-//	   }
 
 
 }

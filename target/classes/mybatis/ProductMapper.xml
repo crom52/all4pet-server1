@@ -24,8 +24,28 @@
         
 	</collection>
 </resultMap>
+ <resultMap id="getProduct2" type="com.all4pet.entity.ProductEntity">
+		<result property="id" column="id"/>
+		<result property="name" column="name" />
+		<result property = "amount" column="amount" />
+		<result property = "url" column="url" />
+		<result property="price" column="price" />
+		<result property="promotion" column="promotion" />
+		<result property="type" column="type" />
+		<result property = "url2" column = "url2"/>
+        <result property = "url3" column = "url3"/>
+        <result property = "brand" column = "brand"/>
+        <result property = "description" column = "description"/>
+        <result property = "numOfPurchase" column = "numofpurchase"/>
+        <result property = "color" column = "color"/>
+        <result property = "size" column = "size"/>   
+
+</resultMap>
 	<select id="getAllProduct" resultMap="getProduct">
 	select p.*,c.categoryname from product p, category c where p.categoryid = c.categoryid
+	</select>
+	<select id="getAllProduct2" resultMap="getProduct2">
+	select * from product
 	</select>
 	
 
@@ -105,21 +125,14 @@
     </delete>
     
      <update id="updateProductById" >
-        UPDATE PRODUCT 
-        SET NAME = #{product.name}
-        , AMOUNT = #{product.amount} 
+        UPDATE PRODUCT SET
+        AMOUNT = #{product.amount} 
         , URL = #{product.url} 
-        , URL2 = #{product.url2}
-        , URL3 = #{product.url3}
         , PRICE = #{product.price}
         , PROMOTION = #{product.promotion}
         , TYPE = #{product.type}
         , BRAND = #{product.brand}
         , NUMOFPURCHASE = #{product.numOfPurchase}
-        , DESCRIPTION = #{product.description}
-        , CATEGORYID = #{product.category.categoryid}
-        , SIZE = #{product.size}
-        , COLOR = #{product.color}
         WHERE ID = #{id};
       </update>
       

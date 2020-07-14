@@ -154,47 +154,6 @@ public class CheckoutController {
 		}
 	}
 
-	@Transactional
-	@PostMapping("/admin/updateOrder/{id}")
-	@ResponseBody
-	public void updateOrder(@PathVariable("id") long id, @RequestBody JsonNode json) {
-		String billCode = json.get(1).asText();
-		String receiver = json.get(2).asText();
-		String address = json.get(3).asText();
-		String phonenumber = json.get(4).asText();
-		String productName = json.get(5).asText();
-		int status = json.get(6).asInt();
-		String paymentMethod = json.get(7).asText();
-		float totalMoney = json.get(8).asLong();
-		BillEntity bill = billMapper.getBillById(id);
-		if (bill == null) {
-			// chua co bill nay. dung cho btnAdd Order
-			bill = new BillEntity();
-			bill.setBillCode(billCode);
-			bill.setReceiver(receiver);
-			bill.setAddress(address);
-			bill.setPaymentMethod(paymentMethod);
-			bill.setStatus(status);
-			bill.setPhonenumber(phonenumber);
-			bill.setTotalMoney(totalMoney);
-			
-			productName = VNCharacterUtils.removeAccent(productName);
-			productName = "%"+productName+"%";
-			ProductEntity product = productMapper.getProductByName(productName);
-			if (product != null) {
-				billMapper.saveBill(bill);
-				billMapper.saveBillItems(billCode, product.getId());
-			}
-		} else {
-			// da co bill nay. dung cho btnUpdate Order
-			billMapper.updateOrder(id, receiver, address, phonenumber, status, paymentMethod, totalMoney);
-		}
-
-	}
 	
-	@GetMapping("admin/deleteOrder/{id}")
-	public void deleteOrderById(@PathVariable(value = "id") long id) {
-		billMapper.deleteOrderById(id);
-	}
 
 }

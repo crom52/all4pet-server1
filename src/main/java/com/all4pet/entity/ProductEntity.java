@@ -47,6 +47,29 @@ public ProductEntity () {
 
 
 
+	public ProductEntity( int amount, float price, int promotion, String type, String brand,
+		 int numOfPurchase) {
+		
+		this.amount = amount;
+		this.price = price;
+		this.promotion = promotion;
+		this.type = type;
+		this.brand = brand;
+		this.numOfPurchase = numOfPurchase;
+
+}
+	public ProductEntity( int amount, float price, int promotion, String type, String brand,
+			 int numOfPurchase, String url) {
+		 
+			
+			this.amount = amount;
+			this.price = price;
+			this.promotion = promotion;
+			this.type = type;
+			this.brand = brand;
+			this.numOfPurchase = numOfPurchase;
+			this.url = url;
+	}
 	public String getName() {
 		return name;
 	}
