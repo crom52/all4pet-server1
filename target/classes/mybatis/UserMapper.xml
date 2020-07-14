@@ -77,6 +77,20 @@
 select u.*, ru.rolename from user u , roleusers ru where u.roleid = ru.roleid 
 </select>
 
+<select id="getUserById" resultMap="getUserById">
+<!-- 	select u.*,r.rolename from user u, roleusers r where u.roleid=r.roleid -->
+select * from user where id = #{userId}
+</select>
+
+<resultMap id="getUserById" type="com.all4pet.entity.UserEntity">
+ 		<result property="id" column="id"/>
+		<result property="userName" column="username" />
+		<result property="password" column="password" />
+		<result property="active" column="active" />
+		<result property="email" column="email" />
+</resultMap>
+
+
 
  <resultMap id="getUserByUserName" type="com.all4pet.entity.UserEntity">
  		<id property="id" column="id"/>
