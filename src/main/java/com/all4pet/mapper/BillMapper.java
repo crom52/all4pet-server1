@@ -14,12 +14,13 @@ public interface BillMapper {
 	void saveBill(BillEntity bill);
 	void saveBillItems(String billCode, long productId) ;
 	long getBillId();
-	List<BillEntity> getListBillByUserName(String userName);
+	List<BillEntity> getListBillByUserName(String email);
 	List<BillEntity> getOrderList();
 	void deleteOrderById(long id);
 	void updateOrder(long id, String receiver, String address, String phonenumber, int status, String paymentMethod,
 			float totalMoney);
 	BillEntity getBillById(long id);
+	List<BillEntity> getListBillByUserId(long userId);
 
 //	void updateBillItemByBillCode(String billCode, long productId);
 

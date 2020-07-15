@@ -139,15 +139,14 @@ public class WebController {
 		}
 	
 	@GetMapping("/user/showListOrder")
-	public @ResponseBody List<BillEntity> showOrder() {
+	public @ResponseBody List<BillEntity> showOrder(@RequestParam(value = "email") String email) {
 		try {
 			List<BillEntity> bill = new ArrayList<BillEntity>();
 			boolean checkLogin = SecurityController.isAuthenticanted();
 			if (checkLogin == true) {// Da dang nhap
-				String userName = SecurityController.getPrincipal().getName();
-				bill = billMapper.getListBillByUserName(userName);
-			}
-			return bill;
+				bill = billMapper.getListBillByUserName(email);
+				return bill;
+			} else return null;
 		} catch (Exception e) {
 			return null;
 		}

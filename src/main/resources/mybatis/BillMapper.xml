@@ -35,10 +35,11 @@ VALUES(
    </insert> 
    
       <select id="getListBillByUserName" resultMap="getListBillByUserName"> 
-    	select b.*, bi.productid, p.* from bill b, billitems bi, product p 
-		where b.billcode = bi.billcode
-		and b.receiver = #{userName}
-		and bi.productid = p.id
+    	select * from bill b, billitems bi, product p
+where 1=1
+and b.email = #{email}
+and b.billcode = bi.billcode collate utf8_general_ci
+and bi.productid = p.id
     </select>
     
      <select id="getOrderList" resultMap="getListBillByUserName"> 
