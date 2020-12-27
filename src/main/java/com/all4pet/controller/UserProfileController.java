@@ -25,6 +25,9 @@ public class UserProfileController {
 	@GetMapping( "/user/showProfile" )
     public @ResponseBody UserProfileEntity getUserProfile() {
 		boolean checkLogin = SecurityController.isAuthenticanted();
+	    	        long millis = System.currentTimeMillis();
+	    		Date newDate = new Date(millis);
+
 		if (checkLogin == true) {
 			String userName = SecurityController.getPrincipal().getName();
 			UserEntity user = userMapper.getUserByUserName(userName);
@@ -38,13 +41,14 @@ public class UserProfileController {
 			
 			if (userProfile.getName() == null) userProfile.setName(" ");
 			if(userProfile.getAddress() == null) userProfile.setAddress(" ");
-			if(userProfile.getBirthday() == null) userProfile.setBirthday(null);
+			if(userProfile.getBirthday() == null) userProfile.setBirthday(newDate);
+			if(userProfile.getCreatedDate() == null) userProfile.setCreatedDate(newDate);
 			if(userProfile.getPhoneNumber() == null) userProfile.setPhoneNumber("No phone number");
 			
 			
 			return userProfile;
 		}
-		return new UserProfileEntity(" " , " ", null , null, "No phone number", new UserEntity() );
+		return new UserProfileEntity(" " , " ", newDate , newDate, "No phone number", new UserEntity() );
 	}
 	
 	@Transactional
