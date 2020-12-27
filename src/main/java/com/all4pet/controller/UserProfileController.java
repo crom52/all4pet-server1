@@ -30,7 +30,7 @@ public class UserProfileController {
 			UserEntity user = userMapper.getUserByUserName(userName);
 			UserProfileEntity userProfile = userMapper.getUserProfile(user.getId());			
 			if(user == null) {
-			   userProfile.setUserEntity(new UserEntity();
+			   userProfile.setUserEntity(new UserEntity());
 			} else {
 			   userProfile.setUserEntity(user);
 			}
@@ -44,7 +44,7 @@ public class UserProfileController {
 			
 			return userProfile;
 		}
-		return new UserProfileEntity(" " , " ", new Date() , new Date() "No phone number", new UserEntity() );
+		return new UserProfileEntity(" " , " ", new Date() , new Date(), "No phone number", new UserEntity() );
 	}
 	
 	@Transactional
