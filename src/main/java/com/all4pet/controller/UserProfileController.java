@@ -38,13 +38,13 @@ public class UserProfileController {
 			
 			if (userProfile.getName() == null) userProfile.setName(" ");
 			if(userProfile.getAddress() == null) userProfile.setAddress(" ");
-			if(userProfie.getBirthday() == null) userProfile.setBirthday(new Date());
+			if(userProfie.getBirthday() == null) userProfile.setBirthday(null);
 			if(userProfile.getPhoneNumber() == null) userProfile.setPhoneNumber("No phone number");
 			
 			
 			return userProfile;
 		}
-		return new UserProfileEntity(" " , " ", new Date() , new Date(), "No phone number", new UserEntity() );
+		return new UserProfileEntity(" " , " ", null , null, "No phone number", new UserEntity() );
 	}
 	
 	@Transactional
