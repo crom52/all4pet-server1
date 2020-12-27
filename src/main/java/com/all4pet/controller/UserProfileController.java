@@ -38,7 +38,7 @@ public class UserProfileController {
 			
 			if (userProfile.getName() == null) userProfile.setName(" ");
 			if(userProfile.getAddress() == null) userProfile.setAddress(" ");
-			if(userProfie.getBirthday() == null) userProfile.setBirthday(null);
+			if(userProfile.getBirthday() == null) userProfile.setBirthday(null);
 			if(userProfile.getPhoneNumber() == null) userProfile.setPhoneNumber("No phone number");
 			
 			
