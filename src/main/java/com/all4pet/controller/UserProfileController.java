@@ -29,10 +29,22 @@ public class UserProfileController {
 			String userName = SecurityController.getPrincipal().getName();
 			UserEntity user = userMapper.getUserByUserName(userName);
 			UserProfileEntity userProfile = userMapper.getUserProfile(user.getId());			
-			userProfile.setUserEntity(user);
+			if(user == null) {
+			   userProfile.setUserEntity(new UserEntity();
+			} else {
+			   userProfile.setUserEntity(user);
+			}
+			
+			
+			if (userProfile.getName() == null) userProfile.setName(" ");
+			if(userProfile.getAddress() == null) userProfile.setAddress(" ");
+			if(userProfie.getBirthday() == null) userProfile.setBirthday(new Date());
+			if(userProfile.getPhoneNumber() == null) userProfile.setPhoneNumber("No phone number");
+			
+			
 			return userProfile;
 		}
-		return new UserProfileEntity(null,null);
+		return new UserProfileEntity(" " , " ", new Date() , new Date() "No phone number", new UserEntity() );
 	}
 	
 	@Transactional
