@@ -62,7 +62,7 @@
     <dependency> 
       <groupId>org.springframework</groupId>  
       <artifactId>spring-jdbc</artifactId>  
-      <version>4.3.6.RELEASE</version>
+      <version>6.1.14</version>
       <!--$NO-MVN-MAN-VER$--> 
     </dependency>  
      <dependency>
